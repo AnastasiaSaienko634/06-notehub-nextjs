@@ -2,15 +2,15 @@
 import css from "./page.module.css";
 import { keepPreviousData, useQuery } from "@tanstack/react-query";
 import { fetchNotes } from "@/lib/api";
-import Loader from "../components/Loader/Loader";
-import ErrorMessage from "../components/ErrorMessage/ErrorMessage";
-import NoteList from "../components/NoteList/NoteList";
-import Modal from "../components/Modal/Modal";
-import NoteForm from "../components/NoteForm/NoteForm";
+import Loader from "../../components/Loader/Loader";
+import ErrorMessage from "../../components/ErrorMessage/ErrorMessage";
+import NoteList from "../../components/NoteList/NoteList";
+import Modal from "../../components/Modal/Modal";
+import NoteForm from "../../components/NoteForm/NoteForm";
 import { Toaster } from "react-hot-toast";
-import Pagination from "../components/Pagination/Pagination";
+import Pagination from "../../components/Pagination/Pagination";
 import { useState } from "react";
-import SearchBox from "../components/SearchBox/SearchBox";
+import SearchBox from "../../components/SearchBox/SearchBox";
 const Notes = () => {
   const [isMOdalOpen, setIsModalOpen] = useState(false);
   const [query, setQuery] = useState("");
