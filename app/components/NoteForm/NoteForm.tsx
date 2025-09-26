@@ -1,7 +1,6 @@
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import css from "./NoteForm.module.css";
 import { createNote } from "@/lib/api";
-import type { Note } from "@/types/note";
 import { Formik, Form, Field, ErrorMessage } from "formik";
 import * as Yup from "yup";
 import toast from "react-hot-toast";
@@ -13,14 +12,20 @@ interface NoteFormProps {
 interface InitialValues {
   title: string;
   content: string;
-  tag: string;
+  tag: "Todo" | "Work" | "Personal" | "Meeting" | "Shopping";
 }
+
+type CreateNote = {
+  title: string;
+  content: string;
+  tag: "Todo" | "Work" | "Personal" | "Meeting" | "Shopping";
+};
 
 const NoteForm = ({ onClose }: NoteFormProps) => {
   const queryClient = useQueryClient();
 
   const mutation = useMutation({
-    mutationFn: (newTask: Note) => createNote(newTask),
+    mutationFn: (newTask: CreateNote) => createNote(newTask),
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ["notes"] }); //для того щоб нотатки обновились
     },
@@ -30,7 +35,7 @@ const NoteForm = ({ onClose }: NoteFormProps) => {
   const initialValues: InitialValues = {
     title: "",
     content: "",
-    tag: "",
+    tag: "Todo",
   };
 
   const NoteFormSchema = Yup.object().shape({

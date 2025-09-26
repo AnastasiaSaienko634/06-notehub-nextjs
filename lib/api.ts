@@ -5,6 +5,12 @@ interface CreateNoteResponse {
   note: Note;
 }
 
+interface createNote {
+  title: string;
+  content: string;
+  tag: "Todo" | "Work" | "Personal" | "Meeting" | "Shopping";
+}
+
 interface fetchNotesResponse {
   notes: Note[];
   totalPages: number;
@@ -43,7 +49,9 @@ export const fetchNoteById = async (noteId: string) => {
   return response.data;
 };
 
-export const createNote = async (note: Note): Promise<CreateNoteResponse> => {
+export const createNote = async (
+  note: createNote
+): Promise<CreateNoteResponse> => {
   const response = await axios.post<CreateNoteResponse>("/notes", note, {
     headers: {
       Authorization: `Bearer ${VITE_NOTEHUB_TOKEN}`,
