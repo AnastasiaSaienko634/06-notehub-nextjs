@@ -1,7 +1,7 @@
 const ErrorMessage = () => {
   return (
     <div>
-      <p>Whops..Something wrong</p>
+      <p>Something went wrong.</p>
     </div>
   );
 };
