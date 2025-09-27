@@ -4,9 +4,9 @@ import { useQuery } from "@tanstack/react-query";
 import { useParams } from "next/navigation";
 import Loader from "@/components/Loader/Loader";
 import ErrorMessage from "@/components/ErrorMessage/ErrorMessage";
-import css from "./NoteDetailsClient.module.css";
+import css from "./NoteDetails.module.css";
 
-const NoteDetailsPage = () => {
+const NoteDetails = () => {
   const { id } = useParams<{ id: string }>();
   const { data, isLoading, isError } = useQuery({
     queryKey: ["note", id],
@@ -36,4 +36,4 @@ const NoteDetailsPage = () => {
   );
 };
 
-export default NoteDetailsPage;
+export default NoteDetails;
