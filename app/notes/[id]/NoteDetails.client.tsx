@@ -14,24 +14,24 @@ const NoteDetails = () => {
     refetchOnMount: false,
   });
 
-  const formatteDate = data.updatedAt
-    ? `Updated at: ${data.updatedAt}`
-    : `Created at: ${data.createdAt}`;
+  const formattedDate = data
+    ? data.updatedAt
+      ? `Updated at: ${data.updatedAt}`
+      : `Created at: ${data.createdAt}`
+    : "";
+
+  if (isLoading) return <Loader />;
+  if (isError) return <ErrorMessage />;
+  if (!data) return null;
   return (
     <div className={css.container}>
-      {isLoading && <Loader isLoading={isLoading} />}
-      {data && (
-        <div className={css.container}>
-          <div className={css.item}>
-            <div className={css.header}>
-              <h2>{data.title}</h2>
-            </div>
-            <p className={css.content}>{data.content}</p>
-            <p className={css.date}>{formatteDate}</p>
-          </div>
-          {isError && <ErrorMessage />}
+      <div className={css.item}>
+        <div className={css.header}>
+          <h2>{data.title}</h2>
         </div>
-      )}
+        <p className={css.content}>{data.content}</p>
+        <p className={css.date}>{formattedDate}</p>
+      </div>
     </div>
   );
 };

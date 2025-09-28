@@ -5,18 +5,18 @@ interface CreateNoteResponse {
   note: Note;
 }
 
-interface createNote {
+interface CreateNote {
   title: string;
   content: string;
   tag: "Todo" | "Work" | "Personal" | "Meeting" | "Shopping";
 }
 
-interface fetchNotesResponse {
+interface FetchNotesResponse {
   notes: Note[];
   totalPages: number;
 }
 
-interface deleteNoteResponse {
+interface DeleteNoteResponse {
   note: Note;
 }
 
@@ -26,8 +26,8 @@ const VITE_NOTEHUB_TOKEN = process.env.NEXT_PUBLIC_NOTEHUB_TOKEN;
 export const fetchNotes = async (
   query: string,
   currentPage: number
-): Promise<fetchNotesResponse> => {
-  const response = await axios.get<fetchNotesResponse>("/notes", {
+): Promise<FetchNotesResponse> => {
+  const response = await axios.get<FetchNotesResponse>("/notes", {
     params: {
       search: query,
       page: currentPage,
@@ -50,7 +50,7 @@ export const fetchNoteById = async (noteId: string) => {
 };
 
 export const createNote = async (
-  note: createNote
+  note: CreateNote
 ): Promise<CreateNoteResponse> => {
   const response = await axios.post<CreateNoteResponse>("/notes", note, {
     headers: {
@@ -61,7 +61,7 @@ export const createNote = async (
 };
 
 export const deleteNote = async (noteId: string) => {
-  const response = await axios.delete<deleteNoteResponse>(`/notes/${noteId}`, {
+  const response = await axios.delete<DeleteNoteResponse>(`/notes/${noteId}`, {
     headers: {
       Authorization: `Bearer ${VITE_NOTEHUB_TOKEN}`,
     },

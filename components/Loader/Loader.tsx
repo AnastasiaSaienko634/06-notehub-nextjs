@@ -8,17 +8,12 @@ const override: CSSProperties = {
   borderColor: "red",
 };
 
-interface LoaderProps {
-  isLoading: boolean;
-}
-
-const Loader = ({ isLoading }: LoaderProps) => {
+const Loader = () => {
   const [color] = useState("#ffffff");
   return (
     <>
       <ClipLoader
         color={color}
-        loading={isLoading}
         cssOverride={override}
         size={150}
         aria-label="Loading Spinner"

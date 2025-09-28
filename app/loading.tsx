@@ -1,6 +1,5 @@
-"use client";
 import { ClipLoader } from "react-spinners";
-import { useState } from "react";
+
 import type { CSSProperties } from "react";
 
 const override: CSSProperties = {
@@ -9,24 +8,16 @@ const override: CSSProperties = {
   borderColor: "red",
 };
 
-interface LoaderProps {
-  isLoading: boolean;
-}
-
-const Loader = ({ isLoading }: LoaderProps) => {
-  const [color] = useState("#ffffff");
+const Loading = () => {
   return (
-    <>
-      <ClipLoader
-        color={color}
-        loading={isLoading}
-        cssOverride={override}
-        size={150}
-        aria-label="Loading Spinner"
-        data-testid="loader"
-      />
-    </>
+    <ClipLoader
+      color="#ffffff"
+      cssOverride={override}
+      size={150}
+      aria-label="Loading Spinner"
+      data-testid="loader"
+    />
   );
 };
 
-export default Loader;
+export default Loading;

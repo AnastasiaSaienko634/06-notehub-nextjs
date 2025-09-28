@@ -22,9 +22,10 @@ const Modal = ({ children, onClose }: ModalProps) => {
     };
 
     document.addEventListener("keydown", handleKeydropClick);
-
+    document.body.style.overflow = "hidden";
     return () => {
       document.removeEventListener("keydown", handleKeydropClick);
+      document.body.style.overflow = "auto";
     };
   }, [onClose]);
 

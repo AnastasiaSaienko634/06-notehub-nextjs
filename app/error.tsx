@@ -11,6 +11,7 @@ const Error = ({ error, reset }: ErrorProps) => {
   return (
     <div>
       <p>Whoops... something went wrong!</p>
+      <p>{error.message}</p>
       <button onClick={reset}>Reset</button>
     </div>
   );

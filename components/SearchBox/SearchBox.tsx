@@ -1,25 +1,13 @@
 import css from "./SearchBox.module.css";
-import { useDebouncedCallback } from "use-debounce";
-import { useState } from "react";
 
 interface SearchBoxProps {
-  setQuery: (query: string) => void;
-  query: string;
-  setCurrentPage: (number: number) => void;
+  onChange: (value: string) => void;
+  value: string;
 }
 
-const SearchBox = ({ setQuery, query, setCurrentPage }: SearchBoxProps) => {
-  const [inputValue, setInputValue] = useState(query);
-  const debouncedChange = useDebouncedCallback((value: string) => {
-    setQuery(value);
-    setCurrentPage(1);
-  });
+const SearchBox = ({ onChange, value }: SearchBoxProps) => {
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    setInputValue(event.target.value);
-    if (event.target.value === "") {
-      return;
-    }
-    debouncedChange(event.target.value);
+    onChange(event.target.value);
   };
 
   return (
@@ -29,7 +17,7 @@ const SearchBox = ({ setQuery, query, setCurrentPage }: SearchBoxProps) => {
         type="text"
         placeholder="Search notes"
         onChange={handleChange}
-        value={inputValue}
+        value={value}
       />
     </>
   );

@@ -27,7 +27,9 @@ const NoteForm = ({ onClose }: NoteFormProps) => {
   const mutation = useMutation({
     mutationFn: (newTask: CreateNote) => createNote(newTask),
     onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ["notes"] }); //для того щоб нотатки обновились
+      queryClient.invalidateQueries({ queryKey: ["notes"] });
+      onClose();
+      toast.success("You have successfully created a new note!"); //для того щоб нотатки обновились
     },
     onError: () => {},
   });
@@ -40,12 +42,10 @@ const NoteForm = ({ onClose }: NoteFormProps) => {
 
   const NoteFormSchema = Yup.object().shape({
     title: Yup.string()
-      .min(3, "Title must be at least 2 characters")
+      .min(3, "Title must be at least 3 characters")
       .max(50, "Title is too long")
       .required("Title is required"),
-    content: Yup.string()
-      .required("Content is required")
-      .max(500, "Content is too long"),
+    content: Yup.string().max(500, "Content is too long"),
     tag: Yup.string()
       .required("Tag is required")
       .oneOf(
@@ -61,8 +61,6 @@ const NoteForm = ({ onClose }: NoteFormProps) => {
         content: values.content,
         tag: values.tag,
       });
-      onClose();
-      toast.success("You have successfully created a new note!");
     }
   };
 

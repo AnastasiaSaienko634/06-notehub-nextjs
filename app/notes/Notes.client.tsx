@@ -11,30 +11,33 @@ import { Toaster } from "react-hot-toast";
 import Pagination from "../../components/Pagination/Pagination";
 import { useState } from "react";
 import SearchBox from "../../components/SearchBox/SearchBox";
+import { useDebounce } from "use-debounce";
 const Notes = () => {
-  const [isMOdalOpen, setIsModalOpen] = useState(false);
+  const [isModalOpen, setIsModalOpen] = useState(false);
   const [query, setQuery] = useState("");
+  const [debounceTerm] = useDebounce(query, 500);
   const [currentPage, setCurrentPage] = useState(1);
 
   const onOpen = () => setIsModalOpen(true);
   const onClose = () => setIsModalOpen(false);
 
   const { error, data, isLoading, isSuccess } = useQuery({
-    queryKey: ["notes", query, currentPage],
-    queryFn: () => fetchNotes(query, currentPage),
+    queryKey: ["notes", debounceTerm, currentPage],
+    queryFn: () => fetchNotes(debounceTerm, currentPage),
     placeholderData: keepPreviousData,
   });
+
+  const onChange = (value: string) => {
+    setQuery(value);
+    setCurrentPage(1);
+  };
 
   return (
     <div className={css.app}>
       <Toaster position="top-right" />
 
       <header className={css.toolbar}>
-        <SearchBox
-          setQuery={setQuery}
-          query={query}
-          setCurrentPage={setCurrentPage}
-        />
+        <SearchBox onChange={onChange} value={query} />
         {isSuccess && data.totalPages > 1 && (
           <Pagination
             currentPage={currentPage}
@@ -46,10 +49,10 @@ const Notes = () => {
           Create note +
         </button>
       </header>
-      {isLoading && <Loader isLoading={isLoading} />}
+      {isLoading && <Loader />}
       {error && <ErrorMessage />}
       {data && data?.notes.length > 0 && <NoteList notes={data.notes} />}
-      {isMOdalOpen && (
+      {isModalOpen && (
         <Modal onClose={onClose}>
           <NoteForm onClose={onClose} />
         </Modal>
